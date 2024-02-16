@@ -20,6 +20,10 @@ public class Matrix {
         else inputMatrixValues(matrix, rows, cols);
 
         printMatrix(matrix, rows, cols);
+        System.out.println("Min: " + findMatrixMin(matrix, rows, cols));
+        System.out.println("Max: " + findMatrixMax(matrix, rows, cols));
+        System.out.println("Arithmetic mean: " + calculateMatrixArithmeticMean(matrix, rows, cols));
+        System.out.println("Geometric mean: " + calculateMatrixGeometricMean(matrix, rows, cols));
     }
 
     private static boolean askIfRandomMatrix() {
@@ -38,7 +42,7 @@ public class Matrix {
 
     private static int defineMatrixSize(String dimension) {
         while (true) {
-            System.out.printf("Enter the number of %d: ", dimension);
+            System.out.printf("Enter the number of %s: ", dimension);
             int size = sc.nextInt();
             if (size > 0 && size <= MAX_MATRIX_SIZE) return size;
             else System.out.println("Invalid input. Please enter a number between 1 and " + MAX_MATRIX_SIZE);
