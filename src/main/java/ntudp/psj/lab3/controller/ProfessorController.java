@@ -3,13 +3,17 @@ package ntudp.psj.lab3.controller;
 import ntudp.psj.lab3.model.Sex;
 import ntudp.psj.lab3.model.Professor;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class ProfessorController {
-    private ArrayList<Professor> professors = new ArrayList<Professor>();
+    private ArrayList<Professor> vacantProfessors = new ArrayList<Professor>();
+    private Map<String, Professor> assignedProfessors = new HashMap<String, Professor>();
 
     public ProfessorController( ) {
+        createBasicProfessorsCollection();
+    }
+
+    private void createBasicProfessorsCollection() {
         Professor rector = new Professor("Oleksandr", "Azyukovsky", "Oleksandrovych", Sex.male);
         Professor deanIT = new Professor("Iryna", "Udovik", "Myhailivna", Sex.female);
         Professor deanM = new Professor("Olena", "Tryfonova", "Vasylivna", Sex.female);
@@ -18,14 +22,16 @@ public class ProfessorController {
         Professor headFL = new Professor("Svitlana", "Kostrytska", "Ivanivha", Sex.female);
         Professor headAE = new Professor("Oleksandra", "Vagonova", "Grygoriyvna", Sex.female);
 
-        Collections.addAll(professors,rector, deanIT, deanM, headSE, headSA, headFL, headAE);
+        Collections.addAll(vacantProfessors,rector, deanIT, deanM, headSE, headSA, headFL, headAE);
     }
 
-    public void assignPositionToProfessor(int idx, String position) {
-        professors.get(idx).setPosition(position);
+    public void assignPositionToProfessor(String position) {
+        vacantProfessors.getFirst().setPosition(position);
+        assignedProfessors.put(position, vacantProfessors.getFirst());
+        vacantProfessors.removeFirst();
     }
 
-    public Professor getProfessor(int idx) {
-        return professors.get(idx);
+    public Professor getVacantProfessor() {
+        return vacantProfessors.getFirst();
     }
 }

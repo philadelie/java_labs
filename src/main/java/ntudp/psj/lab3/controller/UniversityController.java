@@ -1,22 +1,30 @@
 package ntudp.psj.lab3.controller;
 
+import ntudp.psj.lab3.Printable;
 import ntudp.psj.lab3.model.University;
 
-public class UniversityController {
+public class UniversityController implements Printable<University> {
     private University uni;
     private ProfessorController professorController;
-    private FacultyController facultyController;
 
     public UniversityController(ProfessorController professorController) {
         this.professorController = professorController;
         createUniversity("NTU DP");
-        this.facultyController = new FacultyController(professorController, 2);
     }
 
     private void createUniversity(String name) {
-        this.uni = new University(name, professorController.getProfessor(0));
-        professorController.assignPositionToProfessor(0, "rector");
-        System.out.println("University \"" + uni.getName() + "\" is created. " +
-                "Rector: " + uni.getHead().getFullName() + ".");
+        this.uni = new University(name, professorController.getVacantProfessor());
+        professorController.assignPositionToProfessor("rector");
+        printCreationText(uni);
+    }
+
+    @Override
+    public void printCreationText(University uni) {
+        System.out.printf("University \"" + uni.getName() + "\" is created. ");
+        printHeadInfo(uni);
+    }
+    @Override
+    public void printHeadInfo(University uni) {
+        System.out.println("Rector: " + uni.getHead().getFullName() + ".");
     }
 }
