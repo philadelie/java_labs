@@ -33,8 +33,8 @@ public class Runner {
     }
 
     private static void linkUniTogether() {
-        uniController.setFaculties(facultyController.getFaculties());
-        facultyController.setDepartments(departmentController.getDepartments());
-        departmentController.setGroups(groupController.getGroups());
+        uniController.linkFaculties(facultyController);
+        facultyController.linkDepartments(departmentController);
+        departmentController.linkGroups(groupController);
     }
 }

@@ -3,6 +3,7 @@ package ntudp.psj.lab3.controller;
 import ntudp.psj.lab3.AbbreviationsMaker;
 import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Department;
+import ntudp.psj.lab3.model.Faculty;
 
 import java.util.ArrayList;
 
@@ -47,5 +48,15 @@ public class DepartmentController implements
     @Override
     public void printHeadInfo(Department department) {
         System.out.println("Head: " + department.getHead().getFullName() + ".");
+    }
+
+    public void linkGroups(GroupController groupController) {
+        for (Department department : departments) {
+            department.setGroups(groupController.getGroups());
+        }
+    }
+
+    public Department[] getDepartments() {
+        return departments.toArray(Department[]::new);
     }
 }

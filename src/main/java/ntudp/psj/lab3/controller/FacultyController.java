@@ -37,4 +37,14 @@ public class FacultyController implements
     public void printHeadInfo(Faculty faculty) {
         System.out.println("Dean: " + faculty.getHead().getFullName() + ".");
     }
+
+    public void linkDepartments(DepartmentController departmentController) {
+        for (Faculty faculty : faculties) {
+            faculty.setDepartments(departmentController.getDepartments());
+        }
+    }
+
+    public Faculty[] getFaculties() {
+        return faculties.toArray(Faculty[]::new);
+    }
 }

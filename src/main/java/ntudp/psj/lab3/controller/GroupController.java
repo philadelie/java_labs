@@ -1,6 +1,7 @@
 package ntudp.psj.lab3.controller;
 
 import ntudp.psj.lab3.Printer;
+import ntudp.psj.lab3.model.Faculty;
 import ntudp.psj.lab3.model.Group;
 
 import java.util.ArrayList;
@@ -48,5 +49,9 @@ public class GroupController implements Printer<Group> {
     @Override
     public void printHeadInfo(Group group) {
         System.out.println("Head: " + group.getHead().getFullName() + ".");
+    }
+
+    public Group[] getGroups() {
+        return groups.toArray(Group[]::new);
     }
 }

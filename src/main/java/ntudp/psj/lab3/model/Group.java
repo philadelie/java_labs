@@ -15,10 +15,6 @@ public class Group {
         this.students.add(student);
     }
 
-    public void setStudents(ArrayList<Student> students) {
-        this.students.addAll(students);
-    }
-
     public String getName() {
         return name;
     }
@@ -29,5 +25,9 @@ public class Group {
 
     public void setHead(Human head) {
         this.head = head;
+    }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students.addAll(students);
     }
 }

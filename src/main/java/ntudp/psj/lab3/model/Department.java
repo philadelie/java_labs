@@ -3,6 +3,7 @@ package ntudp.psj.lab3.model;
 public class Department {
     String name;
     Human head;
+    Group[] groups;
 
     public Department(String name, Human head) {
         this.name = name;
@@ -15,5 +16,9 @@ public class Department {
 
     public Human getHead() {
         return head;
+    }
+
+    public void setGroups(Group[] groups) {
+        this.groups = groups;
     }
 }

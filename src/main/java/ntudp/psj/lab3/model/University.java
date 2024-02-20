@@ -3,6 +3,7 @@ package ntudp.psj.lab3.model;
 public class University {
     String name;
     Human head;
+    Faculty[] faculties;
 
     public University(String name, Human head) {
         this.name = name;
@@ -15,5 +16,9 @@ public class University {
 
     public Human getHead() {
         return head;
+    }
+
+    public void setFaculties(Faculty[] faculties) {
+        this.faculties = faculties;
     }
 }

@@ -27,4 +27,8 @@ public class UniversityController implements Printer<University> {
     public void printHeadInfo(University uni) {
         System.out.println("Rector: " + uni.getHead().getFullName() + ".");
     }
+
+    public void linkFaculties(FacultyController facultyController) {
+        uni.setFaculties(facultyController.getFaculties());
+    }
 }
