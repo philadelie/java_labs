@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Group {
     String name;
     Human head;
-    private ArrayList<Student> students = new ArrayList<Student>();
+    private ArrayList<Student> students = new ArrayList<>();
 
     public Group(String name) {
         this.name = name;
@@ -19,19 +19,15 @@ public class Group {
         this.students.addAll(students);
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
-    }
-
-    public void setHead(Human head) {
-        this.head = head;
+    public String getName() {
+        return name;
     }
 
     public Human getHead() {
         return head;
     }
 
-    public String getName() {
-        return name;
+    public void setHead(Human head) {
+        this.head = head;
     }
 }

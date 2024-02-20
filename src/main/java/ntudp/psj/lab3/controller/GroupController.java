@@ -1,13 +1,13 @@
 package ntudp.psj.lab3.controller;
 
-import ntudp.psj.lab3.Printable;
+import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Group;
 
 import java.util.ArrayList;
 
-public class GroupController implements Printable<Group> {
+public class GroupController implements Printer<Group> {
     private StudentController studentController;
-    private ArrayList<Group> groups = new ArrayList<Group>();
+    private ArrayList<Group> groups = new ArrayList<>();
 
     public GroupController(StudentController studentController, String[] departmentsAbbreviations, int studentsAmountInGroup) {
         this.studentController = studentController;
@@ -21,17 +21,20 @@ public class GroupController implements Printable<Group> {
                 Group group = new Group(groupName);
                 groups.add(group);
                 populateGroup(group, studentsAmount);
+                assignGroupHead(group);
                 printCreationText(group);
             }
         }
     }
 
     private void populateGroup(Group group, int studentsAmount) {
-        String groupName = group.getName();
-        studentController.createStudentGroup(groupName, studentsAmount);
-        group.setStudents(studentController.getTheGroupOfStudents(groupName));
-        studentController.chooseGroupHead(groupName);
-        group.setHead(studentController.getGroupHead(groupName));
+        studentController.createStudentGroup(group.getName(), studentsAmount);
+        group.setStudents(studentController.getTheGroupOfStudents(group.getName()));
+    }
+
+    public void assignGroupHead(Group group) {
+        studentController.chooseGroupHead(group.getName());
+        group.setHead(studentController.getGroupHead(group.getName()));
     }
 
     @Override

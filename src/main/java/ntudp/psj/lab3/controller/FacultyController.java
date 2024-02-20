@@ -1,13 +1,16 @@
 package ntudp.psj.lab3.controller;
 
-import ntudp.psj.lab3.Printable;
+import ntudp.psj.lab3.AbbreviationsMaker;
+import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Faculty;
 
 import java.util.ArrayList;
 
-public class FacultyController implements Printable<Faculty> {
+public class FacultyController implements
+        Printer<Faculty>,
+        AbbreviationsMaker {
     private ProfessorController professorController;
-    private ArrayList<Faculty> faculties = new ArrayList<Faculty>();
+    private ArrayList<Faculty> faculties = new ArrayList<>();
     private final String[] FACULTY_NAMES = new String[]{"Information Technology", "Management"};
 
     public FacultyController(ProfessorController professorController, int facultiesNumber) {
@@ -19,16 +22,9 @@ public class FacultyController implements Printable<Faculty> {
         for (int i = 0; i < n && i < FACULTY_NAMES.length; i++) {
             Faculty faculty = new Faculty(FACULTY_NAMES[i], professorController.getVacantProfessor());
             faculties.add(faculty);
-            professorController.assignPositionToProfessor("dean" + getFacultyAbbreviation(i));
+            professorController.assignPositionToProfessor("dean" + makeAbbreviation(faculty.getName()));
             printCreationText(faculty);
         }
-    }
-
-    public String getFacultyAbbreviation(int idx) {
-        String abb = "";
-        String[] words = FACULTY_NAMES[idx].split(" ");
-        for (String word : words) abb += word.charAt(0);
-        return abb;
     }
 
     @Override

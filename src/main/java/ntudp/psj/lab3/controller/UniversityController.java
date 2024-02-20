@@ -1,9 +1,9 @@
 package ntudp.psj.lab3.controller;
 
-import ntudp.psj.lab3.Printable;
+import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.University;
 
-public class UniversityController implements Printable<University> {
+public class UniversityController implements Printer<University> {
     private University uni;
     private ProfessorController professorController;
 

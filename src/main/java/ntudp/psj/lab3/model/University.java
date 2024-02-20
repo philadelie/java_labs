@@ -9,20 +9,11 @@ public class University {
         this.head = head;
     }
 
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Human getHead() {
         return head;
-    }
-
-    public void setHead(Human head) {
-        this.head = head;
     }
 }

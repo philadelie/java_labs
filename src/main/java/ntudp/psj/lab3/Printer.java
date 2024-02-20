@@ -1,6 +1,6 @@
 package ntudp.psj.lab3;
 
-public interface Printable<T> {
+public interface Printer<T> {
     void printCreationText(T obj);
     void printHeadInfo(T obj);
 }

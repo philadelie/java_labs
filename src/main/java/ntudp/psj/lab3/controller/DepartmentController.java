@@ -1,14 +1,18 @@
 package ntudp.psj.lab3.controller;
 
-import ntudp.psj.lab3.Printable;
+import ntudp.psj.lab3.AbbreviationsMaker;
+import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Department;
 
 import java.util.ArrayList;
 
-public class DepartmentController implements Printable<Department> {
+public class DepartmentController implements
+        Printer<Department>,
+        AbbreviationsMaker {
     private ProfessorController professorController;
     private ArrayList<Department> departments = new ArrayList<Department>();
-    private final String[] DEPARTMENT_NAMES = new String[]{"Software Engineering", "System Analysis",
+    private final String[] DEPARTMENT_NAMES = new String[]{
+            "Software Engineering", "System Analysis",
             "Foreign Languages", "Applied Economics"};
 
     public DepartmentController(ProfessorController professorController, int departmentsNumber) {
@@ -20,24 +24,17 @@ public class DepartmentController implements Printable<Department> {
         for (int i = 0; i < n && i < DEPARTMENT_NAMES.length; i++) {
             Department department = new Department(DEPARTMENT_NAMES[i], professorController.getVacantProfessor());
             departments.add(department);
-            professorController.assignPositionToProfessor("head" + getDepartmentAbbreviation(i));
+            professorController.assignPositionToProfessor("head" + makeAbbreviation(department.getName()));
             printCreationText(department);
         }
     }
 
     public String[] getDepartmentsAbbreviation() {
-        String[] tmp = new String[departments.size()];
+        String[] abbs = new String[departments.size()];
         for (int i = 0; i < departments.size(); i++) {
-            tmp[i] = getDepartmentAbbreviation(i);
+            abbs[i] = makeAbbreviation(departments.get(i).getName());
         }
-        return tmp;
-    }
-
-    private String getDepartmentAbbreviation(int idx) {
-        String abb = "";
-        String[] words = DEPARTMENT_NAMES[idx].split(" ");
-        for (String word : words) abb += word.charAt(0);
-        return abb;
+        return abbs;
     }
 
     @Override
