@@ -11,16 +11,30 @@ public class Runner {
     private static StudentController studentController;
 
     public static void main(String[] args) {
-        createTypicalUniversity(2,4, 2);
+        createTypicalUniversity();
     }
 
-    private static void createTypicalUniversity(int facultiesNumber, int departmentsNumber, int studentsInGroup) {
+    private static void createTypicalUniversity() {
+        createPeople();
+        createUniStructures(2, 2, 2);
+        linkUniTogether();
+    }
+
+    private static void createPeople() {
         professorController = new ProfessorController();
         studentController = new StudentController();
+    }
 
+    private static void createUniStructures(int facultiesNumber, int departmentsInFaculty, int studentsInGroup) {
         uniController = new UniversityController(professorController);
         facultyController = new FacultyController(professorController, facultiesNumber);
-        departmentController = new DepartmentController(professorController, departmentsNumber);
-        groupController = new GroupController(studentController, departmentController.getDepartmentsAbbreviation(), studentsInGroup);
+        departmentController = new DepartmentController(professorController, facultiesNumber * departmentsInFaculty);
+        groupController = new GroupController(studentController, departmentController.getAbbreviations(), studentsInGroup);
+    }
+
+    private static void linkUniTogether() {
+        uniController.setFaculties(facultyController.getFaculties());
+        facultyController.setDepartments(departmentController.getDepartments());
+        departmentController.setGroups(groupController.getGroups());
     }
 }

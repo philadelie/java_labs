@@ -10,18 +10,19 @@ public class DepartmentController implements
         Printer<Department>,
         AbbreviationsMaker {
     private ProfessorController professorController;
-    private ArrayList<Department> departments = new ArrayList<Department>();
+    private ArrayList<Department> departments = new ArrayList<>();
     private final String[] DEPARTMENT_NAMES = new String[]{
             "Software Engineering", "System Analysis",
             "Foreign Languages", "Applied Economics"};
 
-    public DepartmentController(ProfessorController professorController, int departmentsNumber) {
+    public DepartmentController(ProfessorController professorController, int departmentsAmount) {
         this.professorController = professorController;
-        createDepartments(departmentsNumber);
+        int departmentsMax = Math.min(departmentsAmount, DEPARTMENT_NAMES.length);
+        createDepartments(departmentsMax);
     }
 
     private void createDepartments(int n) {
-        for (int i = 0; i < n && i < DEPARTMENT_NAMES.length; i++) {
+        for (int i = 0; i < n; i++) {
             Department department = new Department(DEPARTMENT_NAMES[i], professorController.getVacantProfessor());
             departments.add(department);
             professorController.assignPositionToProfessor("head" + makeAbbreviation(department.getName()));
@@ -29,7 +30,7 @@ public class DepartmentController implements
         }
     }
 
-    public String[] getDepartmentsAbbreviation() {
+    public String[] getAbbreviations() {
         String[] abbs = new String[departments.size()];
         for (int i = 0; i < departments.size(); i++) {
             abbs[i] = makeAbbreviation(departments.get(i).getName());
