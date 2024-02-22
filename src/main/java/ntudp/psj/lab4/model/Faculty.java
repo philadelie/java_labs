@@ -18,6 +18,10 @@ public class Faculty {
         return head;
     }
 
+    public Department[] getDepartments() {
+        return departments;
+    }
+
     public void setDepartments(Department[] departments) {
         this.departments = departments;
     }

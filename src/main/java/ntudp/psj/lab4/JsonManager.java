@@ -4,18 +4,16 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.logging.Logger;
-
 class JsonManager {
     private static Gson gson;
+    private static String json;
 
     public JsonManager() {
         gson = new Gson();
     }
 
     public void writeToJson(Object obj) {
-        Logger logger = Logger.getLogger("ntudp.psj.lab4.JsonManager");
-        logger.info(gson.toJson(obj));
+        json = gson.toJson(obj);
     }
 
     public void recordIntoFile() {

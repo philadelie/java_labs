@@ -18,6 +18,10 @@ public class Department {
         return head;
     }
 
+    public Group[] getGroups() {
+        return groups;
+    }
+
     public void setGroups(Group[] groups) {
         this.groups = groups;
     }

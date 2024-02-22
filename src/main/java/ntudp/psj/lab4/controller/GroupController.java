@@ -17,8 +17,8 @@ public class GroupController implements Printer<Group> {
 
     private void createGroups(String[] departments, int groupsInADepartment, int studentsInAGroup) {
         for (String department : departments) {
+            groups.put(department, new ArrayList<>());
             for (int i = 0; i < groupsInADepartment; i++) {
-                groups.put(department, new ArrayList<>());
                 Group group = new Group(department + "-" + (i + 1));
                 groups.get(department).add(group);
                 populateGroup(group, studentsInAGroup);
