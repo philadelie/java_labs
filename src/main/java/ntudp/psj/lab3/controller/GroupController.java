@@ -1,7 +1,6 @@
 package ntudp.psj.lab3.controller;
 
 import ntudp.psj.lab3.Printer;
-import ntudp.psj.lab3.model.Faculty;
 import ntudp.psj.lab3.model.Group;
 
 import java.util.ArrayList;
@@ -10,14 +9,14 @@ public class GroupController implements Printer<Group> {
     private StudentController studentController;
     private ArrayList<Group> groups = new ArrayList<>();
 
-    public GroupController(StudentController studentController, String[] departmentsAbbreviations, int studentsAmountInGroup) {
+    public GroupController(StudentController studentController, String[] departmentsAbbreviations, int groupsInDepartment, int studentsAmountInGroup) {
         this.studentController = studentController;
-        createGroups(departmentsAbbreviations, studentsAmountInGroup);
+        createGroups(departmentsAbbreviations, groupsInDepartment, studentsAmountInGroup);
     }
 
-    private void createGroups(String[] departments, int studentsAmount) {
+    private void createGroups(String[] departments, int groupsAmount,  int studentsAmount) {
         for (String department : departments) {
-            for (int i = 0; i < studentsAmount; i++) {
+            for (int i = 0; i < groupsAmount; i++) {
                 String groupName = department + "-" + (i + 1);
                 Group group = new Group(groupName);
                 groups.add(group);

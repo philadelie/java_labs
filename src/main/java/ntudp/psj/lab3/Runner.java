@@ -1,6 +1,7 @@
 package ntudp.psj.lab3;
 
 import ntudp.psj.lab3.controller.*;
+import ntudp.psj.lab3.model.University;
 
 public class Runner {
     private static UniversityController uniController;
@@ -11,13 +12,14 @@ public class Runner {
     private static StudentController studentController;
 
     public static void main(String[] args) {
-        createTypicalUniversity();
+        University uni = createTypicalUniversity();
     }
 
-    private static void createTypicalUniversity() {
+    private static University createTypicalUniversity() {
         createPeople();
-        createUniStructures(2, 2, 2);
+        createUniStructures(2, 2, 2, 2);
         linkUniTogether();
+        return uniController.getUniversity();
     }
 
     private static void createPeople() {
@@ -25,11 +27,15 @@ public class Runner {
         studentController = new StudentController();
     }
 
-    private static void createUniStructures(int facultiesNumber, int departmentsInFaculty, int studentsInGroup) {
+    private static void createUniStructures(
+            int facultiesNumber,
+            int departmentsInFaculty,
+            int groupsInDepartment,
+            int studentsInGroup) {
         uniController = new UniversityController(professorController);
         facultyController = new FacultyController(professorController, facultiesNumber);
-        departmentController = new DepartmentController(professorController, facultiesNumber * departmentsInFaculty);
-        groupController = new GroupController(studentController, departmentController.getAbbreviations(), studentsInGroup);
+        departmentController = new DepartmentController(professorController, departmentsInFaculty);
+        groupController = new GroupController(studentController, departmentController.getAbbreviations(), groupsInDepartment, studentsInGroup);
     }
 
     private static void linkUniTogether() {

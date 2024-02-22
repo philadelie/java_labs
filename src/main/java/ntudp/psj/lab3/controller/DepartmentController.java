@@ -3,7 +3,6 @@ package ntudp.psj.lab3.controller;
 import ntudp.psj.lab3.AbbreviationsMaker;
 import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Department;
-import ntudp.psj.lab3.model.Faculty;
 
 import java.util.ArrayList;
 

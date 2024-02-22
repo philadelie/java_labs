@@ -6,8 +6,8 @@ import ntudp.psj.lab3.model.Student;
 import java.util.*;
 
 public class StudentController {
-    private ArrayList<Student> newStudents = new ArrayList<Student>();
-    private Map<String, ArrayList<Student>> studentsInGroups = new HashMap<String, ArrayList<Student>>();
+    private ArrayList<Student> newStudents = new ArrayList<>();
+    private Map<String, ArrayList<Student>> studentsInGroups = new HashMap<>();
 
     public StudentController() {
         createBasicStudentsCollection();
@@ -45,7 +45,7 @@ public class StudentController {
     }
 
     public void intialiseGroup(String group) {
-        studentsInGroups.put(group, new ArrayList<Student>());
+        studentsInGroups.put(group, new ArrayList<>());
     }
 
     public void assignStudentToGroup(String group) {

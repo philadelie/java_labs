@@ -13,13 +13,14 @@ public class FacultyController implements
     private ArrayList<Faculty> faculties = new ArrayList<>();
     private final String[] FACULTY_NAMES = new String[]{"Information Technology", "Management"};
 
-    public FacultyController(ProfessorController professorController, int facultiesNumber) {
+    public FacultyController(ProfessorController professorController, int facultiesAmount) {
         this.professorController = professorController;
-        createFaculties(facultiesNumber);
+        int facultiesMax = Math.min(facultiesAmount, FACULTY_NAMES.length);
+        createFaculties(facultiesMax);
     }
 
     private void createFaculties(int n) {
-        for (int i = 0; i < n && i < FACULTY_NAMES.length; i++) {
+        for (int i = 0; i < n; i++) {
             Faculty faculty = new Faculty(FACULTY_NAMES[i], professorController.getVacantProfessor());
             faculties.add(faculty);
             professorController.assignPositionToProfessor("dean" + makeAbbreviation(faculty.getName()));

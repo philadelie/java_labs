@@ -3,8 +3,10 @@ package ntudp.psj.lab3.controller;
 import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.University;
 
+import java.util.ArrayList;
+
 public class UniversityController implements Printer<University> {
-    private University uni;
+    private ArrayList<University> unis = new ArrayList<>();
     private ProfessorController professorController;
 
     public UniversityController(ProfessorController professorController) {
@@ -13,9 +15,9 @@ public class UniversityController implements Printer<University> {
     }
 
     private void createUniversity(String name) {
-        this.uni = new University(name, professorController.getVacantProfessor());
+        this.unis.add(new University(name, professorController.getVacantProfessor()));
         professorController.assignPositionToProfessor("rector");
-        printCreationText(uni);
+        printCreationText(unis.getLast());
     }
 
     @Override
@@ -29,6 +31,10 @@ public class UniversityController implements Printer<University> {
     }
 
     public void linkFaculties(FacultyController facultyController) {
-        uni.setFaculties(facultyController.getFaculties());
+        unis.getLast().setFaculties(facultyController.getFaculties());
+    }
+
+    public University getUniversity() {
+        return unis.getLast();
     }
 }

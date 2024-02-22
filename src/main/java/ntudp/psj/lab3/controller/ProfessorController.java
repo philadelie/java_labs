@@ -6,8 +6,8 @@ import ntudp.psj.lab3.model.Professor;
 import java.util.*;
 
 public class ProfessorController {
-    private ArrayList<Professor> vacantProfessors = new ArrayList<Professor>();
-    private Map<String, Professor> assignedProfessors = new HashMap<String, Professor>();
+    private ArrayList<Professor> vacantProfessors = new ArrayList<>();
+    private Map<String, Professor> assignedProfessors = new HashMap<>();
 
     public ProfessorController( ) {
         createBasicProfessorsCollection();
