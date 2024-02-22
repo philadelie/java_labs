@@ -6,7 +6,7 @@ import ntudp.psj.lab3.model.University;
 import java.util.ArrayList;
 
 public class UniversityController implements Printer<University> {
-    private ArrayList<University> unis = new ArrayList<>();
+    private University uni;
     private ProfessorController professorController;
 
     public UniversityController(ProfessorController professorController) {
@@ -15,9 +15,9 @@ public class UniversityController implements Printer<University> {
     }
 
     private void createUniversity(String name) {
-        this.unis.add(new University(name, professorController.getVacantProfessor()));
+        uni = new University(name, professorController.getVacantProfessor());
         professorController.assignPositionToProfessor("rector");
-        printCreationText(unis.getLast());
+        printCreationText(uni);
     }
 
     @Override
@@ -25,16 +25,13 @@ public class UniversityController implements Printer<University> {
         System.out.printf("University \"" + uni.getName() + "\" is created. ");
         printHeadInfo(uni);
     }
+
     @Override
     public void printHeadInfo(University uni) {
         System.out.println("Rector: " + uni.getHead().getFullName() + ".");
     }
 
     public void linkFaculties(FacultyController facultyController) {
-        unis.getLast().setFaculties(facultyController.getFaculties());
-    }
-
-    public University getUniversity() {
-        return unis.getLast();
+        uni.setFaculties(facultyController.getFaculties());
     }
 }
