@@ -27,6 +27,10 @@ public class Group {
         this.head = head;
     }
 
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
+
     public void setStudents(ArrayList<Student> students) {
         this.students.addAll(students);
     }
