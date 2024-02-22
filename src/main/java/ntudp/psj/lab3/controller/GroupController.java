@@ -1,26 +1,27 @@
 package ntudp.psj.lab3.controller;
 
-import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Group;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GroupController implements Printer<Group> {
-    private StudentController studentController;
-    private ArrayList<Group> groups = new ArrayList<>();
+    private final Map<String, ArrayList<Group>> groups = new HashMap<>();
+    private final StudentController studentController;
 
-    public GroupController(StudentController studentController, String[] departmentsAbbreviations, int groupsInDepartment, int studentsAmountInGroup) {
-        this.studentController = studentController;
-        createGroups(departmentsAbbreviations, groupsInDepartment, studentsAmountInGroup);
+    public GroupController(Map<String, Integer> uniUnitsAmount, String[] departments) {
+        studentController = new StudentController();
+        createGroups(departments, uniUnitsAmount.get("groups"), uniUnitsAmount.get("students"));
     }
 
-    private void createGroups(String[] departments, int groupsAmount,  int studentsAmount) {
+    private void createGroups(String[] departments, int groupsInADepartment, int studentsInAGroup) {
         for (String department : departments) {
-            for (int i = 0; i < groupsAmount; i++) {
-                String groupName = department + "-" + (i + 1);
-                Group group = new Group(groupName);
-                groups.add(group);
-                populateGroup(group, studentsAmount);
+            for (int i = 0; i < groupsInADepartment; i++) {
+                groups.put(department, new ArrayList<>());
+                Group group = new Group(department + "-" + (i + 1));
+                groups.get(department).add(group);
+                populateGroup(group, studentsInAGroup);
                 assignGroupHead(group);
                 printCreationText(group);
             }
@@ -29,7 +30,7 @@ public class GroupController implements Printer<Group> {
 
     private void populateGroup(Group group, int studentsAmount) {
         studentController.createStudentGroup(group.getName(), studentsAmount);
-        group.setStudents(studentController.getTheGroupOfStudents(group.getName()));
+        group.setStudents(studentController.getSomeGroup(group.getName()));
     }
 
     public void assignGroupHead(Group group) {
@@ -50,7 +51,7 @@ public class GroupController implements Printer<Group> {
         System.out.println("Head: " + group.getHead().getFullName() + ".");
     }
 
-    public Group[] getGroups() {
-        return groups.toArray(Group[]::new);
+    public Group[] getGroupsOfDepartment(String department) {
+        return groups.get(department).toArray(Group[]::new);
     }
 }

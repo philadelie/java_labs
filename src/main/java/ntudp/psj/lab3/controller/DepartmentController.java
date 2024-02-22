@@ -1,41 +1,50 @@
 package ntudp.psj.lab3.controller;
 
-import ntudp.psj.lab3.AbbreviationsMaker;
-import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Department;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public class DepartmentController implements
-        Printer<Department>,
-        AbbreviationsMaker {
-    private ProfessorController professorController;
-    private ArrayList<Department> departments = new ArrayList<>();
+public class DepartmentController implements Printer<Department>, AbbreviationsMaker {
     private final String[] DEPARTMENT_NAMES = new String[]{
             "Software Engineering", "System Analysis",
             "Foreign Languages", "Applied Economics"};
+    private final Map<String, ArrayList<Department>> departments = new HashMap<>();
+    private final ProfessorController profController;
+    private final GroupController groupController;
 
-    public DepartmentController(ProfessorController professorController, int departmentsAmount) {
-        this.professorController = professorController;
-        int departmentsMax = Math.min(departmentsAmount, DEPARTMENT_NAMES.length);
-        createDepartments(departmentsMax);
+    public DepartmentController(ProfessorController pC, Map<String, Integer> uniUnitsAmount, String[] faculties) {
+        this.profController = pC;
+        createDepartments(faculties, uniUnitsAmount.get("departments"));
+        this.groupController = new GroupController(uniUnitsAmount, getAbbreviations());
+        linkGroups();
     }
 
-    private void createDepartments(int n) {
-        for (int i = 0; i < n; i++) {
-            Department department = new Department(DEPARTMENT_NAMES[i], professorController.getVacantProfessor());
-            departments.add(department);
-            professorController.assignPositionToProfessor("head" + makeAbbreviation(department.getName()));
-            printCreationText(department);
+    private void createDepartments(String[] faculties, int n) {
+        int j = 0;
+        for (String faculty : faculties) {
+            departments.put(faculty, new ArrayList<>());
+            for (int i = 0; i < n; i++) {
+                Department department = new Department(DEPARTMENT_NAMES[j++], profController.getVacantProfessor());
+                departments.get(faculty).add(department);
+                profController.assignPositionToProfessor("head" + makeAbbreviation(department.getName()));
+                printCreationText(department);
+            }
         }
     }
 
     public String[] getAbbreviations() {
-        String[] abbs = new String[departments.size()];
-        for (int i = 0; i < departments.size(); i++) {
-            abbs[i] = makeAbbreviation(departments.get(i).getName());
+        ArrayList<String> abbs = new ArrayList<>();
+        for (String faculty : departments.keySet()) {
+            ArrayList<Department> deps = departments.get(faculty);
+            for (Department dep : deps) {
+                String abb = makeAbbreviation(dep.getName());
+                abbs.add(abb);
+            }
         }
-        return abbs;
+        return abbs.toArray(String[]::new);
     }
 
     @Override
@@ -49,13 +58,16 @@ public class DepartmentController implements
         System.out.println("Head: " + department.getHead().getFullName() + ".");
     }
 
-    public void linkGroups(GroupController groupController) {
-        for (Department department : departments) {
-            department.setGroups(groupController.getGroups());
+    public void linkGroups() {
+        for (String faculty : departments.keySet()) {
+            for (Department department : departments.get(faculty)) {
+                String departmentAbbreviation = makeAbbreviation(department.getName());
+                department.setGroups(groupController.getGroupsOfDepartment(departmentAbbreviation));
+            }
         }
     }
 
-    public Department[] getDepartments() {
-        return departments.toArray(Department[]::new);
+    public Department[] getDepartmentsOfFaculty(String faculty) {
+        return departments.get(faculty).toArray(Department[]::new);
     }
 }

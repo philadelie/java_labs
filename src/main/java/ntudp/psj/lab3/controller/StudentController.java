@@ -7,7 +7,7 @@ import java.util.*;
 
 public class StudentController {
     private ArrayList<Student> newStudents = new ArrayList<>();
-    private Map<String, ArrayList<Student>> studentsInGroups = new HashMap<>();
+    private Map<String, ArrayList<Student>> groupedStudents = new HashMap<>();
 
     public StudentController() {
         createBasicStudentsCollection();
@@ -38,39 +38,27 @@ public class StudentController {
     }
 
     public void createStudentGroup(String group, int studentsAmount) {
-        intialiseGroup(group);
+        groupedStudents.put(group, new ArrayList<>());
         for (int i = 0; i < studentsAmount; i++) {
             assignStudentToGroup(group);
         }
     }
 
-    public void intialiseGroup(String group) {
-        studentsInGroups.put(group, new ArrayList<>());
-    }
-
     public void assignStudentToGroup(String group) {
         newStudents.getFirst().setGroup(group);
-        studentsInGroups.get(group).add(newStudents.getFirst());
+        groupedStudents.get(group).add(newStudents.getFirst());
         newStudents.removeFirst();
-    }
-
-    public Student getNewStudent() {
-        return newStudents.getFirst();
-    }
-
-    public ArrayList<Student> getTheGroupOfStudents(String group) {
-        return studentsInGroups.get(group);
     }
 
     public void chooseGroupHead(String group) {
         Random rand = new Random();
-        ArrayList<Student> theGroup = getTheGroupOfStudents(group);
+        ArrayList<Student> theGroup = groupedStudents.get(group);
         Student choosenStudent = theGroup.get(rand.nextInt(theGroup.size()));
         choosenStudent.setHead(true);
     }
 
     public Student getGroupHead(String group) {
-        ArrayList<Student> theGroup = getTheGroupOfStudents(group);
+        ArrayList<Student> theGroup = groupedStudents.get(group);
         for (Student student : theGroup) {
             if (student.isHead()) {
                 return student;
@@ -80,12 +68,20 @@ public class StudentController {
     }
 
     public void printStudentsInfo(String group) {
-        ArrayList<Student> theGroup = getTheGroupOfStudents(group);
+        ArrayList<Student> theGroup = groupedStudents.get(group);
         System.out.print("Students: ");
         for (Student student : theGroup) {
             System.out.printf(student.getFullName());
             if (theGroup.indexOf(student) != theGroup.size() - 1)  System.out.print(", ");
             else System.out.println(".");
         }
+    }
+
+    public Student getNewStudent() {
+        return newStudents.getFirst();
+    }
+
+    public ArrayList<Student> getSomeGroup(String group) {
+        return groupedStudents.get(group);
     }
 }

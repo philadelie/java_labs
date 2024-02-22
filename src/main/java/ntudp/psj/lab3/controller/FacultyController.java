@@ -1,29 +1,29 @@
 package ntudp.psj.lab3.controller;
 
-import ntudp.psj.lab3.AbbreviationsMaker;
-import ntudp.psj.lab3.Printer;
 import ntudp.psj.lab3.model.Faculty;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-public class FacultyController implements
-        Printer<Faculty>,
-        AbbreviationsMaker {
-    private ProfessorController professorController;
-    private ArrayList<Faculty> faculties = new ArrayList<>();
+public class FacultyController implements Printer<Faculty>, AbbreviationsMaker {
     private final String[] FACULTY_NAMES = new String[]{"Information Technology", "Management"};
+    private final ArrayList<Faculty> faculties = new ArrayList<>();
+    private final ProfessorController profController;
+    private final DepartmentController departmentController;
 
-    public FacultyController(ProfessorController professorController, int facultiesAmount) {
-        this.professorController = professorController;
-        int facultiesMax = Math.min(facultiesAmount, FACULTY_NAMES.length);
+    public FacultyController(ProfessorController pC, Map<String, Integer> uniUnitsAmount) {
+        profController = pC;
+        int facultiesMax = Math.min(uniUnitsAmount.get("faculties"), FACULTY_NAMES.length);
         createFaculties(facultiesMax);
+        departmentController = new DepartmentController(profController, uniUnitsAmount, getAbbreviations());
+        linkDepartments();
     }
 
     private void createFaculties(int n) {
         for (int i = 0; i < n; i++) {
-            Faculty faculty = new Faculty(FACULTY_NAMES[i], professorController.getVacantProfessor());
+            Faculty faculty = new Faculty(FACULTY_NAMES[i], profController.getVacantProfessor());
             faculties.add(faculty);
-            professorController.assignPositionToProfessor("dean" + makeAbbreviation(faculty.getName()));
+            profController.assignPositionToProfessor("dean" + makeAbbreviation(faculty.getName()));
             printCreationText(faculty);
         }
     }
@@ -39,9 +39,18 @@ public class FacultyController implements
         System.out.println("Dean: " + faculty.getHead().getFullName() + ".");
     }
 
-    public void linkDepartments(DepartmentController departmentController) {
+    public String[] getAbbreviations() {
+        String[] abbs = new String[faculties.size()];
+        for (int i = 0; i < faculties.size(); i++) {
+            abbs[i] = makeAbbreviation(faculties.get(i).getName());
+        }
+        return abbs;
+    }
+
+    public void linkDepartments() {
         for (Faculty faculty : faculties) {
-            faculty.setDepartments(departmentController.getDepartments());
+            String facultyAbbreviation = makeAbbreviation(faculty.getName());
+            faculty.setDepartments(departmentController.getDepartmentsOfFaculty(facultyAbbreviation));
         }
     }
 
