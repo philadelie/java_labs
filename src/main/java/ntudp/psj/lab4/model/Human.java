@@ -1,6 +1,6 @@
 package ntudp.psj.lab4.model;
 
-public abstract class Human {
+public class Human {
     String firstName;
     String lastName;
     String patronymic;

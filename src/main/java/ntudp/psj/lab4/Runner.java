@@ -14,9 +14,6 @@ public class Runner {
 
     public static void main(String[] args) {
         createTypicalUniversity();
-        JsonManager jsonManager = new JsonManager();
-        jsonManager.writeToJson(uniController.getUniversity());
-        //compareActualWithRestored();
     }
 
     private static void createTypicalUniversity() {
