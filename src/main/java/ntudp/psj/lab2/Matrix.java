@@ -113,7 +113,8 @@ public class Matrix {
         return sum / (rows * cols);
     }
 
-    private static double calculateMatrixGeometricMean(int[][] arr, int rows, int cols) {int product = 1;
+    private static double calculateMatrixGeometricMean(int[][] arr, int rows, int cols) {
+        double product = 1;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++)
                 product *= arr[i][j];
